@@ -54,12 +54,12 @@ RUN set -x \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer \
     && pecl install redis \
     && echo "extension=redis.so" > /etc/php.d/redis.ini \
-    && yum remove -y ImageMagick-devel php71w-devel gcc make \
-    # Enable php services
-    && docker-service enable syslog \
-    && docker-service enable cron \
-    && docker-run-bootstrap \
-    && docker-image-cleanup
+    && yum remove -y ImageMagick-devel php71w-devel gcc make
+    # # Enable php services
+    # && docker-service enable syslog \
+    # && docker-service enable cron \
+    # && docker-run-bootstrap \
+    # && docker-image-cleanup
 
 EXPOSE 80
 EXPOSE 443

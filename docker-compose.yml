@@ -14,8 +14,8 @@ services:
     volumes: 
       - ${DOCUMENT_ROOT}:/var/www/html
       - ${PHP_INI}:/etc/php.d/php.ini
-      - ${VHOSTS_DIR}:/etc/httpd/conf.d
-      - ${MODULES_DIR}:/etc/httpd/conf.modules.d
+      - ${VHOSTS_CONF}:/etc/httpd/conf.d/vhost.conf
+      - ${MODULES_CONF}:/etc/httpd/conf.modules.d/00-docker.conf
   mysql:
     build: ./bin/mysql
     container_name: '${APP_NAME}-mysql'

@@ -14,12 +14,12 @@ case "$IMAGE_FAMILY" in
 
     RedHat)
         APACHE_MAIN_PATH=/etc/httpd/
-        APACHE_DOCKER_VHOST=/etc/httpd/conf.d/zzz-docker.conf
+        APACHE_DOCKER_VHOST=/etc/httpd/conf.d/10-docker.conf
         ;;
 
     Alpine)
          APACHE_MAIN_PATH=/etc/apache2/
-         APACHE_DOCKER_VHOST=/etc/apache2/conf.d/zzz-docker.conf
+         APACHE_DOCKER_VHOST=/etc/apache2/conf.d/10-docker.conf
         ;;
 esac
 

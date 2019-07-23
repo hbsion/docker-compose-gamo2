@@ -49,8 +49,9 @@ RUN set -x \
         php71w-pecl-imagick \
         php71w-pecl-mongodb \
         php71w-json \
-        php71w-zip \
-    && pecl channel-update pecl.php.net \
+        php71w-zip
+        
+RUN pecl channel-update pecl.php.net \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer \
     && pecl install redis \
     && echo "extension=redis.so" > /etc/php.d/redis.ini \

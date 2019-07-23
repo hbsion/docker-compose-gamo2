@@ -1,16 +1,18 @@
-FROM webdevops/base-app:centos-7
+FROM centos:latest
 
-ENV WEB_DOCUMENT_ROOT=/app \
-    WEB_DOCUMENT_INDEX=index.php \
-    WEB_ALIAS_DOMAIN=*.vm \
-    WEB_PHP_TIMEOUT=600 \
-    WEB_PHP_SOCKET=""
+RUN yum update -y
 
-COPY conf/ /opt/docker/
+# Install Apache
+RUN yum install httpd httpd-tools -y
+RUN yum -y install httpd; yum clean all; systemctl enable httpd.service
 
-RUN set -x \
-    && rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
-    && yum-install \
+
+# Install PHP7.1
+RUN yum install -y epel-release
+RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+RUN yum repolist
+
+RUN yum install -y \
         ImageMagick \
         GraphicsMagick \
         jpegoptim \
@@ -50,17 +52,17 @@ RUN set -x \
         php71w-pecl-mongodb \
         php71w-json \
         php71w-zip
-        
+
 RUN pecl channel-update pecl.php.net \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer \
     && pecl install redis \
-    && echo "extension=redis.so" > /etc/php.d/redis.ini \
-    && yum remove -y ImageMagick-devel php71w-devel gcc make
-    # # Enable php services
-    # && docker-service enable syslog \
-    # && docker-service enable cron \
-    # && docker-run-bootstrap \
-    # && docker-image-cleanup
+    && echo "extension=redis.so" > /etc/php.d/redis.ini
 
-EXPOSE 80
-EXPOSE 443
+
+RUN chown -R apache:apache /var/www/html
+
+WORKDIR /var/www/html
+
+EXPOSE 80 443
+
+CMD ["/usr/sbin/httpd","-D","FOREGROUND"]

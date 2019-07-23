@@ -15,7 +15,7 @@ services:
       - ${DOCUMENT_ROOT}:/var/www/html
       - ${PHP_INI}:/etc/php.d/php.ini
       - ${VHOSTS_DIR}:/etc/httpd/conf.d
-      - ${HTTPD_MODULES_DIR}:/etc/httpd/conf.modules.d
+      - ${MODULES_DIR}:/etc/httpd/conf.modules.d
   mysql:
     build: ./bin/mysql
     container_name: '${APP_NAME}-mysql'

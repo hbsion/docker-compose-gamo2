@@ -3,7 +3,7 @@ version: "3.7"
 services:
   webserver:
     build: 
-      context: ./bin/webserver
+      context: ./bin/server
     container_name: '${APP_NAME}-webserver'
     restart: 'always'
     ports:
@@ -12,10 +12,10 @@ services:
     links: 
       - mysql
     volumes: 
-      - ${DOCUMENT_ROOT}:/var/www/html
-      - ${PHP_INI}:/usr/local/etc/php/php.ini
-      - ${VHOSTS_DIR}:/etc/apache2/sites-enabled
-      - ${APACHE_LOG_DIR}:/var/log/apache2
+      - ${DOCUMENT_ROOT}:/app
+      # - ${PHP_INI}:/usr/local/etc/php/php.ini
+      # - ${VHOSTS_DIR}:/etc/apache2/sites-enabled
+      # - ${APACHE_LOG_DIR}:/var/log/apache2
   mysql:
     build: ./bin/mysql
     container_name: '${APP_NAME}-mysql'
@@ -31,13 +31,13 @@ services:
       # MYSQL_USER: gamo2
       # MYSQL_PASSWORD: gamo2
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: marvambass/phpmyadmin
     container_name: '${APP_NAME}-phpmyadmin'
     links:
       - mysql
     environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
+      PHPMYADMIN_MYSQL_HOST: mysql
+      PHPMYADMIN_MYSQL_PORT: 3306
     ports:
       - '9999:80'
     volumes: 

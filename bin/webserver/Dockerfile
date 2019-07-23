@@ -1,5 +1,9 @@
 FROM php:7.1.30-apache
 
+#fix mpm DEBUG
+RUN a2dismod mpm_event && a2enmod mpm_prefork
+
+#upadte
 RUN apt-get -y update --fix-missing
 RUN apt-get upgrade -y
 

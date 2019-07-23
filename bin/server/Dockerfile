@@ -6,7 +6,7 @@ ENV WEB_DOCUMENT_ROOT=/app \
     WEB_PHP_TIMEOUT=600 \
     WEB_PHP_SOCKET=""
 
-COPY /conf/ /opt/docker/
+COPY ../../conf/ /opt/docker/
 
 RUN set -x \
     && rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm \
